@@ -87,8 +87,9 @@ if not confirmed and not confirmed_comparaison:
     st.write("Veuillez sélectionner les paramètres dans la barre latérale pour afficher les résultats. Cliquez sur la flèche en haut à gauche pour ouvrir la barre latérale si elle n'est pas visible.")
         
     st.subheader("Fonctionnement", divider="red")
-    st.write("Vous pouvez choisir un département, une commune et une période pour visualiser l'évolution du marché immobilier et établir des comparatifs entre différentes zones géographiques.")
+    st.write("Vous pouvez choisir un département, une commune et une période pour visualiser l'évolution du marché immobilier.")
     st.write("Si vous souhaitez afficher les résultats sur la France entière, appuyez sur le bouton 'Confirmer les paramètres' sans sélectionner de département ni de commune.")
+    st.write("Vous pouvez également établir des comparatifs entre différentes zones géographiques.")
 
 if confirmed:
 
@@ -264,8 +265,6 @@ if confirmed:
             st.subheader(f"Les villes les plus chères", divider="red")
             top_villes.index = range(1, len(top_villes) + 1)
             st.dataframe(top_villes)
-
-
         
         top_villes = (
         df[df["departement"] == option].groupby("ville")[bien]
@@ -361,7 +360,7 @@ if confirmed:
             get_fill_color="color_departement",
             get_line_color=[0, 0, 0],
             stroked=True,
-            line_width_min_pixels=2,
+            line_width_min_pixels=3,
             get_radius=900,
         )
 
@@ -470,7 +469,113 @@ if confirmed_comparaison and first_option is not None and second_option is not N
             x_label="Date",
             y_label=f"Coût du m² appartement"
         )
-    
+
+        
+    moyenne_maison_first = (
+        df[df["departement"] == first_option]["loyer_m2_maison"]
+        .mean()
+    )
+
+    moyenne_maison_second = (
+        df[df["departement"] == second_option]["loyer_m2_maison"]
+        .mean()
+    )
+    moyenne_appartement_first = (
+        df[df["departement"] == first_option]["loyer_m2_appartement"]
+        .mean()
+    )
+
+    moyenne_appartement_second = (
+        df[df["departement"] == second_option]["loyer_m2_appartement"]
+        .mean()
+    )
+    df_first = (
+        df[df["departement"] == first_option]
+        .groupby("date")["loyer_m2_maison"]
+        .mean()
+        .reset_index()
+    )
+
+    df_second = (
+        df[df["departement"] == second_option]
+        .groupby("date")["loyer_m2_maison"]
+        .mean()
+        .reset_index()
+    )
+
+    first_year = df_first.loc[df_first["date"] == annee[0], "loyer_m2_maison"].values[0]
+    second_year = df_first.loc[df_first["date"] == annee[1], "loyer_m2_maison"].values[0]
+
+    calcul_first = round(((second_year - first_year) / first_year) * 100, 2)
+
+    first_year = df_second.loc[df_second["date"] == annee[0], "loyer_m2_maison"].values[0]
+    second_year = df_second.loc[df_second["date"] == annee[1], "loyer_m2_maison"].values[0]
+
+    calcul_second = round(((second_year - first_year) / first_year) * 100, 2)
+
+    first_number_town= df[df["departement"] == first_option]["ville"].nunique()
+    second_number_town= df[df["departement"] == second_option]["ville"].nunique()
+
+    if calcul_first<0:
+        courbe_first="Baisse de "
+    else:
+        courbe_first="Hausse de "
+
+    if calcul_second<0:
+        courbe_second="Baisse de "
+    else:
+        courbe_second="Hausse de "
+
+    immobilier_data = {
+        "Indicateur": [
+            "Moyenne m² maison",
+            "Moyenne m² appartement",
+            "Évolution depuis 2018",
+            "Nombre de communes"
+        ],
+        first_departement_name: [
+            moyenne_maison_first.round(2),
+            moyenne_appartement_first.round(2),
+            f"{courbe_first}{calcul_first.round(2)} %",
+            first_number_town
+        ],
+        second_departement_name: [
+            moyenne_maison_second.round(2),
+            moyenne_appartement_second.round(2),
+            f"{courbe_second}{calcul_second.round(2)} %",
+            second_number_town
+        ]
+    }
+
+    df_compare = pd.DataFrame(immobilier_data)
+    st.dataframe(df_compare, hide_index=True)
+
+    comparison_maison = (
+        (moyenne_maison_first - moyenne_maison_second)
+        / moyenne_maison_second
+    ) * 100
+
+    comparison_maison = round(comparison_maison, 2)
+
+    if comparison_maison<0:
+        texte_evolution= "moins cher que le département"
+        arrow_maison="down"
+        arrow_color_maison="inverse"
+    else:
+        texte_evolution= "plus cher que le département"
+        arrow_maison="down"
+        arrow_color_maison="inverse"
+
+    col_metric_1,col_metric_2 = st.columns(2)
+    with col_metric_1:
+        st.metric(
+            f"Comparaision du m²",
+            f"{abs(comparison_maison)} %",
+            delta=f"le département {first_departement_name} est {abs(comparison_maison.round(2))} % {texte_evolution} {second_departement_name}",
+            delta_arrow=arrow_maison,
+            delta_color=arrow_color_maison
+        )
+
 
 st.subheader("Informations importantes", divider="red")
 
