@@ -563,8 +563,8 @@ if confirmed_comparaison and first_option is not None and second_option is not N
         arrow_color_maison="inverse"
     else:
         texte_evolution= "plus cher que le département"
-        arrow_maison="down"
-        arrow_color_maison="inverse"
+        arrow_maison="up"
+        arrow_color_maison="normal"
 
     col_metric_1,col_metric_2 = st.columns(2)
     with col_metric_1:
