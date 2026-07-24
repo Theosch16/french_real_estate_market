@@ -5,7 +5,7 @@ import altair as alt
 
 st.set_page_config(layout="wide")
 
-st.title("Le marché de l'immobilier français")
+st.title("Le marché locatif immobilier français")
 
 col_title_1, col_title_2 = st.columns(2)
 
@@ -87,7 +87,7 @@ if not confirmed and not confirmed_comparaison:
     st.write("Veuillez sélectionner les paramètres dans la barre latérale pour afficher les résultats. Cliquez sur la flèche en haut à gauche pour ouvrir la barre latérale si elle n'est pas visible.")
         
     st.subheader("Fonctionnement", divider="red")
-    st.write("Vous pouvez choisir un département, une commune et une période pour visualiser l'évolution du marché immobilier.")
+    st.write("Vous pouvez choisir un département, une commune et une période pour visualiser l'évolution du marché locatif immobilier français.")
     st.write("Si vous souhaitez afficher les résultats sur la France entière, appuyez sur le bouton 'Confirmer les paramètres' sans sélectionner de département ni de commune.")
     st.write("Vous pouvez également établir des comparatifs entre différentes zones géographiques.")
 
@@ -317,7 +317,7 @@ if confirmed:
             top_villes.index = range(1, len(top_villes) + 1)
             st.dataframe(top_villes)
 
-    st.subheader(f"Carte du marché immobilier - {nom_bien.capitalize()}", divider="red")
+    st.subheader(f"Carte du marché locatif immobilier - {nom_bien.capitalize()}", divider="red")
 
     # On normalise le loyer pour avoir des couleurs entre 0 et 255 non extrêmes
     if option is not None:
