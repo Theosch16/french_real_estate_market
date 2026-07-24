@@ -101,7 +101,7 @@ if confirmed:
     if option is not None:
         df_departement = df_national[df_national["departement"] == option]
         with col_title_1:
-            st.subheader(f"Évolution du marché immobilier", divider="gray")
+            st.subheader(f"Évolution du marché locatif immobilier", divider="gray")
     if commune is not None:
         df_commune = df_national[df_national["ville"] == commune]
     
