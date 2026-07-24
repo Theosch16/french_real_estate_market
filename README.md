@@ -9,11 +9,11 @@ This application allows users to explore rental market trends in France through 
 
 The application is available here: https://french-rental-market.streamlit.app/
 
-* Select a **department**, a **municipality**, and a **time period** to display the corresponding real estate indicators.
+* Select a **department**, a **municipality**, and a **time period** to display the corresponding rental market indicators.
 * To obtain an analysis at the national level, simply click on **"Confirm parameters"** without selecting a department or municipality.
-* It is also possible to compare multiple geographical areas in order to identify differences in real estate market trends.
+* It is also possible to compare multiple geographical areas in order to identify differences in rental market trends.
 
-The application then generates visualizations that allow users to analyze price trends and market evolution based on the selected criteria.
+The application then generates visualizations that allow users to analyze rental trends and rental market evolution based on the selected criteria.
 
 ## Data Sources
 
