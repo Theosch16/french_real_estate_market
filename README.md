@@ -2,12 +2,12 @@ This application allows users to explore rental market trends in France through 
 
 ## Overview
 
-<img width="1919" height="873" alt="{135D2AD9-50EA-47BE-B952-AE1E5E1E8527}" src="https://github.com/user-attachments/assets/8118f082-9111-4954-9ea7-f611c7099f3f" />
-<img width="1912" height="903" alt="{64388573-39A8-4D62-B40B-6B350F8BA259}" src="https://github.com/user-attachments/assets/7e49522c-586e-4162-afe8-132f6d1e3ac8" />
+<img width="1920" height="873" alt="{06973EF4-6719-4340-8F44-29B2FCF6355A}" src="https://github.com/user-attachments/assets/09523566-3a38-46d2-b8a0-a459ba701931" />
+<img width="1918" height="873" alt="{1CD04FC3-CEDA-487D-A39B-8E20B834765F}" src="https://github.com/user-attachments/assets/f3e102a4-db18-4f01-abd1-0cbc55cdc549" />
 
 ## Usage
 
-The application is available here: https://thefrenchrealestatemarket.streamlit.app/
+The application is available here: https://french-rental-market.streamlit.app/
 
 * Select a **department**, a **municipality**, and a **time period** to display the corresponding real estate indicators.
 * To obtain an analysis at the national level, simply click on **"Confirm parameters"** without selecting a department or municipality.
